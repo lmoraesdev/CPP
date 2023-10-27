@@ -1,5 +1,10 @@
 #include "PhoneBook.hpp"
 
+/**
+ * The addContact function adds a new contact to the PhoneBook by prompting the
+ * user for various details such as first name, last name, nickname, darkest
+ * secret, and phone number.
+ */
 void	PhoneBook::addContact(void){
 	Contact newContact;
 	if (this->index > 7)
@@ -36,6 +41,15 @@ void	PhoneBook::addContact(void){
 		this->size++;
 }
 
+/**
+ * The function "drawLine" takes a Contact object and an index as parameters, and
+ * prints the contact's information in a formatted line.
+ *
+ * @param contact The parameter "contact" is of type "Contact" and represents the
+ * contact information for a person.
+ * @param index The index parameter is an integer that represents the position of
+ * the contact in the phone book.
+ */
 void	PhoneBook::drawLine(Contact contact, int index){
 	Contact tmp = contact;
 
@@ -60,6 +74,13 @@ void	PhoneBook::drawLine(Contact contact, int index){
 	std::cout << std::setfill(' ') << std::setw(10) << tmp.nickName <<  "|" << std::endl;
 }
 
+/**
+ * The function "showInfo" prints out the contact information for a given index in
+ * the PhoneBook.
+ *
+ * @param index The parameter "index" is an integer that represents the index of
+ * the contact in the phone book that you want to display the information for.
+ */
 void	PhoneBook::showInfo(int index){
 	std::cout << "First Name: " << this->contact[index].firstName << std::endl;
 	std::cout << "Last Name: " << this->contact[index].lastName << std::endl;
@@ -68,6 +89,13 @@ void	PhoneBook::showInfo(int index){
 	std::cout << "Phone Number: " << this->contact[index].phoneNumber << std::endl;
 }
 
+/**
+ * The function "showContacts" displays the contacts in the phone book and allows
+ * the user to select a contact to view more information.
+ *
+ * @return The function does not have a return type, so it does not return
+ * anything.
+ */
 void	PhoneBook::showContacts(void){
 	std::string	buffer;
 	int			index;
@@ -96,11 +124,22 @@ void	PhoneBook::showContacts(void){
 		std::cout << "Empty contact list" << std::endl;
 }
 
+/**
+ * The searchContact function in the PhoneBook class searches for a contact at a
+ * given index and draws a line to display the contact information.
+ *
+ * @param index The index parameter is an integer that represents the position of
+ * the contact in the phone book that we want to search for. It should be a value
+ * between 0 and 7, inclusive.
+ */
 void PhoneBook::searchContact(int index){
 	if (index >= 0 && index <= 7)
 		this->drawLine(this->contact[index], index);
 }
 
+/**
+ * The PhoneBook constructor initializes the is_open, size, and index variables.
+ */
 PhoneBook::PhoneBook()
 {
 	this->is_open = 1;
@@ -108,6 +147,9 @@ PhoneBook::PhoneBook()
 	this->index = 0;
 }
 
+/**
+ * The destructor for the PhoneBook class.
+ */
 PhoneBook::~PhoneBook()
 {
 }
