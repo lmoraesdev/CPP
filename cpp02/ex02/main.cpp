@@ -1,5 +1,9 @@
 #include "Fixed.hpp"
 
+/**
+ * The main function compares and performs arithmetic operations on Fixed objects,
+ * and also finds the maximum and minimum values.
+ */
 int main( void )
 {
 	{

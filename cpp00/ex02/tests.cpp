@@ -13,6 +13,10 @@
 #include "Account.hpp"
 
 
+/**
+ * The main function initializes vectors of accounts, deposits, and withdrawals,
+ * and then makes deposits into each account using a for loop.
+ */
 int		main( void ) {
 
 	typedef std::vector<Account::t>							  accounts_t;
@@ -47,6 +51,8 @@ int		main( void ) {
 		(*(it.first)).makeDeposit( *(it.second) );
 	}
 
+/* The code is performing a series of operations on a collection of `Account`
+objects. */
 	Account::displayAccountsInfos();
 	std::for_each( acc_begin, acc_end, std::mem_fun_ref( &Account::displayStatus ) );
 

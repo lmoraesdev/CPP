@@ -2,6 +2,16 @@
 #include <fstream>
 #include <iostream>
 
+/**
+ * This C++ program reads a file, replaces all occurrences of a given string with
+ * another string, and writes the modified content to a new file.
+ *
+ * @param argc The variable `argc` represents the number of command-line arguments
+ * passed to the program.
+ * @param argv - `argv[0]` is the name of the program itself
+ *
+ * @return The main function is returning 0.
+ */
 int	main(int argc, char **argv){
 	std::string buffer;
 	std::string s1;

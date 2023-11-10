@@ -1,5 +1,11 @@
 #include "Fixed.hpp"
 
+/**
+ * The main function creates and assigns values to Fixed objects, and then prints
+ * their values and integer representations.
+ *
+ * @return The main function is returning an integer value of 0.
+ */
 int main( void ) {
 	Fixed a;
 	Fixed const b( 10 );

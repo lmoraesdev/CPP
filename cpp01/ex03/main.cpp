@@ -6,6 +6,12 @@
 #include "Weapon.hpp"
 
 
+/**
+ * The main function creates instances of HumanA and HumanB, sets their weapons,
+ * and calls their attack functions.
+ *
+ * @return The main function is returning an integer value of 0.
+ */
 int main()
 {
 	{
