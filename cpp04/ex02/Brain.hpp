@@ -5,6 +5,8 @@
 
 class Brain
 {
+private:
+  std::string name;
 protected:
 	std::string ideas[100];
 public:

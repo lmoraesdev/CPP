@@ -5,6 +5,8 @@
 
 class Animal
 {
+private:
+  std::string name;
 protected:
 	std::string type;
 public:
