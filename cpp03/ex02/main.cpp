@@ -1,25 +1,34 @@
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
 #include "FragTrap.hpp"
-#include <iostream>
 
-int	main( void )
+int	main(void)
 {
-	FragTrap A("Alpha");
-	ScavTrap B("Beta");
+	std::string scav_name = "Fraggy";
+	std::string scav_copy = "FraggyCopy";
 
-	A.attack("Beta");
-	B.takeDamage(30);
+	std::cout << std::endl << GREEN << "----- Constructor calls -----" << RESET << std::endl;
+	FragTrap scavy(scav_name);
 
-	B.attack("Alpha");
-	A.takeDamage(20);
-	A.beRepaired(15);
+	std::cout << std::endl << GREEN << "----- Inherited Member function calls -----" << RESET << std::endl;
+	scavy.takeDamage(10);
+	scavy.beRepaired(10);
 
-	B.guardGate();
+	std::cout << std::endl << GREEN << "----- Modified Member function calls -----" << RESET << std::endl;
+	scavy.attack("some other enemy");
+	scavy.highFivesGuys();
 
-	B.beRepaired(10);
+	std::cout << std::endl << GREEN << "----- Operator overloads -----" << RESET << std::endl;
+	FragTrap scavy2 = scavy;
+	scavy2.attack("another enemy");
 
-	A.highFivesGuys();
+	std::cout << std::endl << GREEN << "----- Copy constructor -----" << RESET << std::endl;
+	FragTrap scavy3(scavy2);
+	scavy3.attack("one more enemy");
 
-	return 0;
+	std::cout << std::endl << GREEN << "----- Polymorphism -----" << RESET << std::endl;
+	ClapTrap *scavy4 = new FragTrap(scav_copy);
+	scavy4->attack("yet another enemy");
+
+	std::cout << std::endl << GREEN << "----- Destructor calls -----" << RESET << std::endl;
+	delete scavy4;
+	return (0);
 }
