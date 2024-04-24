@@ -1,21 +1,46 @@
 #ifndef CONTACT_HPP
 # define CONTACT_HPP
-#include <iostream>
 
+# include <string>
+# include <iostream>
+# include <sstream>
+# include <stdexcept>
 
-class Contact
-{
-private:
-public:
-	std::string firstName;
-	std::string lastName;
-	std::string nickName;
-	std::string secret;
-	std::string phoneNumber;
-	Contact();
-	~Contact();
-	void	setName(const char *name);
-	std::string	getName();
+// Color codes
+const std::string RESET = "\033[0m";
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
+
+class Contact {
+	private:
+		// Attributes
+		std::string	_firstName;
+		std::string	_lastName;
+		std::string	_nickname;
+		std::string	_phoneNumber;
+		std::string	_darkestSecret;
+	public:
+		// Constructors and destructors
+		Contact();
+		~Contact();
+		// Setters
+		void		setFirstName(std::string firstName);
+		void		setLastName(std::string lastName);
+		void		setNickname(std::string nickname);
+		void		setPhoneNumber(std::string phoneNumber);
+		void		setDarkestSecret(std::string darkestSecret);
+		// Getters
+		std::string	getFirstName();
+		std::string	getLastName();
+		std::string	getNickname();
+		std::string	getPhoneNumber();
+		std::string	getDarkestSecret();
+		// Methods
+		void		setContact();
+		void		setInput(const std::string& prompt, const std::string& errorMessage, void (Contact::*setter)(const std::string));
+		void		clearInput(std::string& input);
+		void		printContact();
 };
 
 #endif
