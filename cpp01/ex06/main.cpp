@@ -1,27 +1,91 @@
 #include "Harl.hpp"
 
-/**
- * The main function takes a command line argument, converts it to uppercase, and
- * passes it to the complain function of the Harl object.
- *
- * @param argc The parameter `argc` stands for "argument count" and it represents
- * the number of command-line arguments passed to the program. It includes the name
- * of the program itself as the first argument.
- * @param argv The `argv` parameter is an array of strings that represents the
- * command-line arguments passed to the program. In this case, `argv` is of type
- * `char**`, which means it is an array of pointers to characters.
- *
- * @return The main function is returning 0.
- */
-int main (int argc, char **argv){
+static bool check_args(const std::string& arg);
+static void dialogue(std::string& level);
+static void clerk_dialogue(std::string& line);
+static void harl_dialogue(Harl &harl, std::string& level);
 
-	Harl harl;
-	if(argc != 2)
-		return 0;
-	std::string buffer;
-	for (int y = 0; argv[1][y]; y++){
-		buffer += toupper(argv[1][y]);
-	}
-	harl.complain(buffer);
-	return (0);
+int main(int argc, char *argv[]) {
+    if (argc > 2 || (argv[1] && !check_args(argv[1]))) {
+        std::cout << "Usage: ./harlFilter [DEBUG|INFO|WARNING|ERROR]" << std::endl;
+        return (1);
+    }
+
+    if (argc == 2) {
+        std::string filter(argv[1]);
+        dialogue(filter);
+    } else {
+        std::string no_filter("DEBUG");
+        dialogue(no_filter);
+    }
+    std::cout << "[CLERK] (to another Clerk)" << std::endl;
+    std::cout << "Thank God" << std::endl;
+    std::cout << std::endl;
+    return (0);
+}
+
+static bool check_args(const std::string& arg)
+{
+    std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    for (int i = 0; i < 4; i++)
+    {
+        if (arg == levels[i])
+            return (true);
+    }
+    return (false);
+}
+
+static void dialogue(std::string& level) {
+    Harl harl;
+
+    harl.setFilter(level);
+    std::string harl_levels[5] = {"DEBUG", "INFO", "WARNING", "ERROR", "INVALID"};
+    std::string clerk_lines[5] = {
+        "Oh! Yes, sir. How can I help you now?",
+        "Certainly, sir! We offer additional toppings for an extra charge. I'll make sure to add more bacon to your order.",
+        "I apologize for the inconvenience, sir, but all our burguers come with the exact same amount of bacon.",
+        "I'm sorry, sir, but I'm afraid I can't do that.",
+        "I'll call them for y..."
+    };
+
+    switch (harl.getFilter()) {
+        case INFO:
+            clerk_lines[1] = "Sir? Uh... would you like to pay for some more bacon, is that it?";
+            break;
+        case WARNING:
+            clerk_lines[1] = "Sir? Uh... would you like to pay for some more bacon, is that it?";
+            clerk_lines[2] = "Uh... can I help you with anything else?";
+            clerk_lines[3] = "Sir, please, calm down!";
+            break;
+        case ERROR:
+            clerk_lines[1] = "Sir? Did you hear me?";
+            clerk_lines[2] = "Uh... can I help you with anything else?";
+            clerk_lines[3] = "Okay then, uh... have a nice dinner, then.";
+            clerk_lines[4] = "What the fu...?!";
+            break;
+        default:
+            break;
+    };
+
+    // Test different complaint levels
+    for (int i = 0; i < 5; i++)
+    {
+        clerk_dialogue(clerk_lines[i]);
+        harl_dialogue(harl, harl_levels[i]);
+    }
+    return ;
+}
+
+static void clerk_dialogue(std::string& line) {
+    std::cout << "[CLERK]" << std::endl;
+    std::cout << line << std::endl;
+    std::cout << std::endl;
+    return;
+}
+
+static void harl_dialogue(Harl &harl, std::string& level) {
+    std::cout << "[HARL]" << std::endl;
+    harl.complain(level);
+    std::cout << std::endl;
+    return;
 }

@@ -1,22 +1,34 @@
-#include  <iostream>
+#include <iostream>
+#include <string>
 
-/**
- * The function demonstrates the use of pointers and references in C++ to access
- * and manipulate a string variable.
- *
- * @return The program is returning 0.
- */
-int main (void){
-	std::string brain = "HI THIS IS BRAIN";
-	std::string *stringPTR = &brain;
-	std::string &stringREF = brain;
+int	main(void) {
+    std::string str = "HI THIS IS BRAIN";
+    std::string* stringPTR = &str;
+    std::string& stringREF = str;
 
-	std::cout << &brain << std::endl;
-	std::cout << stringPTR << std::endl;
-	std::cout << &stringREF << std::endl;
+	// Title
+	std::cout << std::endl;
+	std::cout << "POINTER VS REFERENCE" << std::endl;
+	std::cout << "--------------------" << std::endl;
+	std::cout << std::endl;
 
-	std::cout << brain << std::endl;
-	std::cout << *stringPTR << std::endl;
-	std::cout << stringREF << std::endl;
-	return (0);
+	// Variables
+	std::cout << "str = \"" << str << "\"" << std::endl;
+	std::cout << "std::string* stringPTR = &str" << std::endl;
+	std::cout << "std::string& stringREF = str" << std::endl;
+	std::cout << std::endl;
+
+    // Print the memory addresses
+    std::cout << "Memory address of the string variable: " << &str << std::endl;
+    std::cout << "Memory address held by stringPTR: " << stringPTR << std::endl;
+    std::cout << "Memory address held by stringREF: " << &stringREF << std::endl;
+	std::cout << std::endl;
+
+    // Print the values
+    std::cout << "Value of the string variable: " << str << std::endl;
+    std::cout << "Value pointed to by stringPTR: " << *stringPTR << std::endl;
+    std::cout << "Value pointed to by stringREF: " << stringREF << std::endl;
+	std::cout << std::endl;
+
+    return 0;
 }

@@ -1,49 +1,33 @@
 #include "Zombie.hpp"
 
-/**
- * The above function is the constructor for the Zombie class.
- */
-Zombie::Zombie()
-{
+// Default constructor
+Zombie::Zombie(void) {
+	std::cout << GREEN << "\tDefault Zombie created." << RESET << std::endl;
 }
 
-/**
- * The destructor for the Zombie class prints a farewell message with the name of
- * the zombie.
- */
-Zombie::~Zombie()
-{
-	std::cout << this->name << " say goodbye!" << std::endl;
+// Parameterized constructor
+Zombie::Zombie(std::string name) {
+	setName(name);
+	std::cout << GREEN << "\tZombie " << _name << " created." << RESET << std::endl;
 }
 
-/**
- * The function "announce" prints a message indicating that the zombie is saying
- * "BraiiiiiiinnnzzzZ...".
- */
-void Zombie::announce(void){
-	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+// Destructor
+Zombie::~Zombie(void) {
+	std::cout << RED << "\tZombie " << _name << " destroyed." << RESET << std::endl;
 }
 
-/**
- * The function "newZombie" creates a new Zombie object with the given name and
- * returns a pointer to it.
- *
- * @param name A string representing the name of the zombie.
- */
-void	Zombie::set_name(std::string name){
-	this->name = name;
+// Setters
+void	Zombie::setName(std::string name) {
+	_name = name;
 }
 
-/**
- * The function "newZombie" creates a new Zombie object with the given name and
- * returns a pointer to it.
- *
- * @param name A string representing the name of the zombie.
- *
- * @return a pointer to a Zombie object.
- */
-Zombie* newZombie(std::string name){
-	Zombie *new_zombie = new Zombie;
-	new_zombie->set_name(name);
-	return (new_zombie);
+// Getters
+std::string	Zombie::getName(void) {
+	return (_name);
+}
+
+// Member functions
+void	Zombie::announce(void) {
+	std::cout << YELLOW << "\t" << _name << ": BraiiiiiiinnnzzzZ...";
+	std::cout << RESET << std::endl;
 }
