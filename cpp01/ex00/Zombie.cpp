@@ -1,28 +1,26 @@
 #include "Zombie.hpp"
 
-/**
- * The Zombie constructor initializes a Zombie object with the given name.
- *
- * @param name A string representing the name of the zombie.
- */
-Zombie::Zombie(std::string name)
-{
-	this->name = name;
+// Constructors and destructors
+Zombie::Zombie(std::string name) {
+	setName(name);
+	std::cout << GREEN << "\tZombie " << _name << " created." << RESET << std::endl;
+}
+Zombie::~Zombie(void) {
+	std::cout << RED << "\tZombie " << _name << " destroyed." << RESET << std::endl;
 }
 
-/**
- * The destructor for the Zombie class prints a farewell message with the name of
- * the zombie.
- */
-Zombie::~Zombie()
-{
-	std::cout << this->name << " say goodbye!" << std::endl;
+// Setters
+void	Zombie::setName(std::string name) {
+	_name = name;
 }
 
-/**
- * The function "announce" prints a message indicating that the zombie is saying
- * "BraiiiiiiinnnzzzZ...".
- */
-void Zombie::announce(void){
-	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+// Getters
+std::string	Zombie::getName(void) {
+	return (_name);
+}
+
+// Member functions
+void	Zombie::announce(void) {
+	std::cout << YELLOW << "\t" << _name << ": BraiiiiiiinnnzzzZ...";
+	std::cout << RESET << std::endl;
 }

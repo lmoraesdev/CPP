@@ -1,18 +1,17 @@
 #include "Fixed.hpp"
 
-/**
- * The main function creates and assigns values to Fixed objects, and then prints
- * their values and integer representations.
- *
- * @return The main function is returning an integer value of 0.
- */
-int main( void ) {
+int main(void) {
+	// declare a variable of type Fixed
 	Fixed a;
-	Fixed const b( 10 );
-	Fixed const c( 42.42f );
-	Fixed const d( b );
-	a = Fixed( 1234.4321f );
-
+	// declare another variable of type Fixed with a int value
+	Fixed const b(10);
+	// declare another variable of type Fixed with a float value
+	Fixed const c(42.42f);
+	// declare a copy of Fixed b
+	Fixed const d(b);
+	// assign new Fixed to a
+	a = Fixed(1234.4321f);
+	// compare the values of a and b
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
@@ -21,5 +20,5 @@ int main( void ) {
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
-	return 0;
+	return (0);
 }
