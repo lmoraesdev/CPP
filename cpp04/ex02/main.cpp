@@ -1,14 +1,44 @@
-#include  <iostream>
-#include  "Dog.hpp"
-#include  "Cat.hpp"
 
-int main()
-{
-	Dog dog;
-	Cat cat;
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-	dog.makeSound();
-	cat.makeSound();
+// Color codes
+const std::string RESET = "\033[0m";
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
 
+int	main(void) {
+	std::cout << std::endl << YELLOW << "-------- Create Dog --------" << RESET << std::endl << std::endl;
+	const Dog* j = new Dog();
 
+	std::cout << std::endl << YELLOW << "-------- Create Cat --------" << RESET << std::endl << std::endl;
+	const Cat* i = new Cat();
+
+	std::cout << std::endl << YELLOW << "-------- Make Sounds --------" << RESET << std::endl << std::endl;
+	j->makeSound();
+	i->makeSound();
+
+	std::cout << std::endl << YELLOW << "-------- Create copies --------" << RESET << std::endl << std::endl;
+	Dog* copy_dog = new Dog(*((Dog*)j));
+	Cat* copy_cat = new Cat(*((Cat*)i));
+
+	std::cout << std::endl << YELLOW << "-------- Delete Copies --------" << RESET << std::endl << std::endl;
+	delete copy_dog;
+	delete copy_cat;
+
+	std::cout << std::endl << YELLOW << "-------- Assign Operator (Shallow) --------" << RESET << std::endl << std::endl;
+	// assignation operator
+	copy_dog = (Dog*)j;
+	copy_cat = (Cat*)i;
+	copy_dog->makeSound();
+	copy_cat->makeSound();
+
+	std::cout << std::endl << YELLOW << "-------- Delete Dog --------" << RESET << std::endl << std::endl;
+	delete j; //should not create a leak
+
+	std::cout << std::endl << YELLOW << "-------- Delete Cat --------" << RESET << std::endl << std::endl;
+	delete i; //should not create a leak
+
+	return (0);
 }

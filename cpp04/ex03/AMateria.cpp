@@ -1,36 +1,39 @@
 #include "AMateria.hpp"
 
-AMateria::AMateria(std::string const &type)
-{
-	std::cout << "AMateria constructor called " << std::endl;
-	this->type = type;
+// Constructors and destructor
+AMateria::AMateria(void) {
+	_type = "default";
+	std::cout << "Default AMateria constructed!" << std::endl;
+	return ;
+}
+AMateria::AMateria(std::string const &type) {
+	_type = type;
+	std::cout << "AMateria of type " << _type << " constructed!" << std::endl;
+	return ;
+}
+AMateria::AMateria(const AMateria &source) {
+	*this = source;
+	std::cout << "AMateria of type " << _type << " copy constructed!" << std::endl;
+	return ;
+}
+AMateria::~AMateria(void) {
+	std::cout << "AMateria destructed!" << std::endl;
+	return ;
 }
 
-AMateria::AMateria(const AMateria &ref)
-{
-	*this = ref;
-	std::cout << "AMateria contructor by copy" << std::endl;
+// Operator overloads
+AMateria	&AMateria::operator=(const AMateria &other) {
+	if (this == &other)
+		return (*this);
+	this->_type = other._type;
+	return (*this);
 }
 
-AMateria::~AMateria()
-{
-	std::cout << "Destructor of AMateria " << " called" <<std::endl;
+// Member functions
+std::string const	&AMateria::getType(void) const {
+	return (this->_type);
 }
-
-AMateria		&AMateria::operator=(AMateria const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-
-std::string const & AMateria::getType() const {
-	return (this->type);
-}
-
-void AMateria::use(ICharacter& target){
-
+void AMateria::use(ICharacter& target) {
+	std::cout << GREEN << "* " << _type << " uses its powers at " << target.getName() << " *" << RESET << std::endl;
+	return ;
 }

@@ -1,18 +1,26 @@
-#if !defined(ANIMAL_HPP)
+#ifndef ANIMAL_HPP
 # define ANIMAL_HPP
 
-#include <iostream>
+# include <iostream>
 
+// Animal Class
 class Animal
 {
 protected:
-	std::string type;
+	std::string _type;
 public:
-	Animal(std::string const &name = "Default_Frag");
-	Animal(const Animal &ref);
-	Animal	&operator=(Animal const &ref);
-	virtual ~Animal();
-	virtual void makeSound()const;
+	// Constructors and destructor
+	Animal(void);
+	Animal(std::string animal_type);
+	Animal(const Animal& other);
+	virtual ~Animal(void);
+
+	// Operator overloads
+	Animal	&operator=(const Animal& other);
+
+	// Member functions
+	std::string		getType(void) const;
+	virtual void	makeSound(void) const;
 };
 
 #endif

@@ -1,33 +1,30 @@
 #include "Cat.hpp"
 
-Cat::Cat()
-: Animal()
-{
-	this->type = "Cat";
-	std::cout << "Cat constructor called for cat" << std::endl;
+// Constructor and destructor
+Cat::Cat(void) : Animal("Cat") {
+	std::cout << "Cat constructed!" << std::endl;
+	return ;
+}
+Cat::Cat(const Cat& other) : Animal(other) {
+	*this = other;
+	std::cout << "Cat copy constructed!" << std::endl;
+	return ;
+}
+Cat::~Cat(void) {
+	std::cout << "Cat destructed!" << std::endl;
+	return ;
 }
 
-Cat::Cat(const Cat &ref)
-: Animal()
-{
-	*this = ref;
-	std::cout << "Cat contructor by copy" << std::endl;
+// Operator overloads
+Cat	&Cat::operator=(const Cat& other) {
+	if (this == &other)
+		return (*this);
+	_type = other._type;
+	return (*this);
 }
 
-Cat::~Cat()
-{
-	std::cout << "Destructor of Cat " << " called" <<std::endl;
-}
-
-Cat		&Cat::operator=(Cat const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-void Cat::makeSound()const {
-	std::cout << "miau" << std::endl;
+// Member functions
+void	Cat::makeSound(void) const {
+	std::cout << "Cat says: \"Meow!\"" << std::endl;
+	return ;
 }

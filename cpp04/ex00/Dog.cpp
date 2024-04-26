@@ -1,33 +1,30 @@
 #include "Dog.hpp"
 
-Dog::Dog()
-: Animal()
-{
-	this->type = "Dog";
-	std::cout << "Dog constructor called for "<< std::endl;
+// Constructor and destructor
+Dog::Dog(void) : Animal("Dog") {
+	std::cout << "Dog constructed!" << std::endl;
+	return ;
+}
+Dog::Dog(const Dog& other) : Animal(other) {
+	*this = other;
+	std::cout << "Dog copy constructed!" << std::endl;
+	return ;
+}
+Dog::~Dog(void) {
+	std::cout << "Dog destructed!" << std::endl;
+	return ;
 }
 
-Dog::Dog(const Dog &ref)
-: Animal()
-{
-	*this = ref;
-	std::cout << "Dog contructor by copy" << std::endl;
+// Operator overloads
+Dog	&Dog::operator=(const Dog& other) {
+	if (this == &other)
+		return (*this);
+	_type = other._type;
+	return (*this);
 }
 
-Dog::~Dog()
-{
-	std::cout << "Destructor of Dog " << " called" <<std::endl;
-}
-
-Dog		&Dog::operator=(Dog const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-void Dog::makeSound()const {
-	std::cout << "au au" << std::endl;
+// Member functions
+void	Dog::makeSound(void) const {
+	std::cout << "Dog says: \"Woof!\"" << std::endl;
+	return ;
 }
