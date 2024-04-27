@@ -1,79 +1,66 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(std::string const &name, int grade) : name(name)
-{
-	if (grade < 1)
+// Constructors and destructor
+Bureaucrat::Bureaucrat(void) {
+	return ;
+}
+Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name) {
+	if (grade < _max_grade)
 		throw Bureaucrat::GradeTooHighException();
-	else if (grade > 150)
+	else if (grade > _min_grade)
 		throw Bureaucrat::GradeTooLowException();
-	this->grade = grade;
-	std::cout << "Bureaucrat constructor called" << std::endl;
+	else
+		_grade = grade;
+	return ;
+}
+Bureaucrat::Bureaucrat(const Bureaucrat &source) : _name(source._name) {
+	*this = source;
+	return ;
+}
+Bureaucrat::~Bureaucrat(void) {
+	return ;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &ref) : name(ref.getName()) , grade(ref.getGrade())
-{
-	if (this->grade < 1)
-		throw Bureaucrat::GradeTooHighException();
-	else if (this->grade > 150)
-		throw Bureaucrat::GradeTooLowException();
-	std::cout << "Bureaucrat contructor by copy" << std::endl;
-}
-
-Bureaucrat::~Bureaucrat()
-{
-	std::cout << "Destructor of Bureaucrat " << " called" <<std::endl;
-}
-
-Bureaucrat		&Bureaucrat::operator=(Bureaucrat const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		this->grade = ref.getGrade();
-	}
-	return *this;
-}
-
-
-std::string Bureaucrat::getName()const{
-	return (this->name);
-}
-
-int Bureaucrat::getGrade()const{
-	return (this->grade);
-}
-
-Bureaucrat Bureaucrat::operator++ (int value){
-	Bureaucrat holder = *this;
-	this->grade--;
-	if (this->grade < 1)
-		throw Bureaucrat::GradeTooHighException();
-	return (holder);
-}//posincremento
-
-Bureaucrat Bureaucrat::operator-- (int value){
-	Bureaucrat holder = *this;
-	this->grade++;
-	if (this->grade > 150)
-		throw Bureaucrat::GradeTooLowException();
-	return (holder);
-}//posincremento
-
-Bureaucrat &Bureaucrat::operator++ (){
-	this->grade--;
-	if (this->grade < 1)
-		throw Bureaucrat::GradeTooHighException();
+// Operator overloads
+Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &source) {
+	if (this == &source)
+		return (*this);
+	_grade = source._grade;
 	return (*this);
 }
 
-Bureaucrat &Bureaucrat::operator-- (){
-	this->grade++;
-	if (this->grade > 150)
-		throw Bureaucrat::GradeTooHighException();
-	return (*this);
+// Getters
+std::string	Bureaucrat::getName(void) const {
+	return (_name);
+}
+int			Bureaucrat::getGrade(void) const {
+	return (_grade);
 }
 
-std::ostream	&operator<<(std::ostream &out, const Bureaucrat &b){
-	out << b.getName() << ", bureaucrat grade " << b.getGrade() << std::endl;
-	return (out);
+// Member functions
+void		Bureaucrat::incrementGrade(void) {
+	if (_grade - 1 < _max_grade)
+		throw Bureaucrat::GradeTooHighException();
+	else
+		_grade--;
+}
+void		Bureaucrat::decrementGrade(void) {
+	if (_grade + 1 > _min_grade)
+		throw Bureaucrat::GradeTooLowException();
+	else
+		_grade++;
+}
+
+// Exception classes
+const char *Bureaucrat::GradeTooHighException::what() const throw() {
+	return (RED "Grade too high!" RESET);
+}
+const char *Bureaucrat::GradeTooLowException::what() const throw() {
+	return (RED "Grade too low!" RESET);
+}
+
+// Stream operator overload
+std::ostream	&operator<<(std::ostream &os, const Bureaucrat &bureaucrat) {
+	os << YELLOW << bureaucrat.getName() << RESET << ", bureaucrat grade " << GREEN << bureaucrat.getGrade() << RESET << "." << std::endl;
+	return (os);
 }
