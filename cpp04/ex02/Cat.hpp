@@ -1,23 +1,24 @@
-#if !defined(CAT_HPP)
+#ifndef CAT_HPP
 # define CAT_HPP
 
-#include <iostream>
-#include "Animal.hpp"
-#include "Brain.hpp"
+#include "AAnimal.hpp"
 
-class Cat : public Animal
+// Cat Class
+class Cat : public AAnimal
 {
-protected:
-
 private:
-	Brain *brain;
-
+	Brain	*_brain;
 public:
-	Cat();
-	Cat(const Cat &ref);
-	Cat	&operator=(Cat const &ref);
-	~Cat();
-	void makeSound()const;
+	// Constructors and destructor
+	Cat(void);
+	Cat(const Cat& other);
+	virtual ~Cat(void);
+
+	// Operator overloads
+	Cat	&operator=(const Cat& other);
+
+	// Member functions
+	virtual void	makeSound(void) const;
 };
 
 #endif

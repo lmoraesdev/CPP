@@ -1,20 +1,30 @@
-#include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
-#include "FragTrap.hpp"
 #include "DiamondTrap.hpp"
-#include <iostream>
 
-int	main( void )
-{
+int main(void) {
+	std::cout << GREEN << std::endl << "----- Constructor calls -----" << RESET << std::endl;
+	DiamondTrap diamond("Diamond");
 
-	DiamondTrap D("Diamond");
+	std::cout << GREEN << std::endl << "----- Get attributes -----" << RESET << std::endl;
+	std::cout << "Name: " << diamond.getName() << std::endl;
+	std::cout << "ClapTrapName: " << diamond.getClapName() << std::endl;
+	std::cout << "Hit points: " << diamond.getHitPoints() << std::endl;
+	std::cout << "Energy points: " << diamond.getEnergyPoints() << std::endl;
+	std::cout << "Attack damage: " << diamond.getAttackDamage() << std::endl;
 
-	D.attack("Bad_boy");
-	// D.takeDamage(10);
+	std::cout << GREEN << std::endl << "----- Inherited Member function calls -----" << RESET << std::endl;
+	std::cout << "Methods from FragTrap" << std::endl;
+	diamond.highFivesGuys();
+	std::cout << "Methods from ScavTrap" << std::endl;
+	diamond.guardGate();
+	diamond.attack("enemy");
+	std::cout << "Methods from ClapTrap" << std::endl;
+	diamond.takeDamage(10);
+	diamond.beRepaired(10);
+	std::cout << "Hit points: "<< diamond.getHitPoints() << std::endl;
 
-	D.guardGate();
-	D.highFivesGuys();
+	std::cout << GREEN << std::endl << "----- New Member function calls -----" << RESET << std::endl;
+	diamond.whoAmI();
 
-	D.whoAmI();
-	return 0;
+	std::cout << GREEN << std::endl << "----- Destructor calls -----" << RESET << std::endl;
+	return (0);
 }

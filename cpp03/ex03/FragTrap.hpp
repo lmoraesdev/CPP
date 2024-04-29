@@ -1,17 +1,24 @@
-#if !defined(FRAGTRAP_HPP)
+#ifndef FRAGTRAP_HPP
 # define FRAGTRAP_HPP
 
-# include <iostream>
-# include "ClapTrap.hpp"
+#include "ClapTrap.hpp"
 
+// FragTrap class
 class FragTrap : virtual public ClapTrap
 {
-public:
-	FragTrap(std::string const &name = "Default_Frag");
-	FragTrap(const FragTrap &ref);
-	FragTrap	&operator=(FragTrap const &rsh);
-	~FragTrap();
-	void highFivesGuys();
+	public:
+		// Default constructor
+		FragTrap(void);
+		// Class constructor
+		FragTrap(std::string name);
+		// Copy constructor
+		FragTrap(const FragTrap& other);
+		// Destructor
+		~FragTrap(void);
+		// Operator
+		FragTrap& operator=(const FragTrap& other);
+		// Member functions
+		void	highFivesGuys(void);
 };
 
 #endif

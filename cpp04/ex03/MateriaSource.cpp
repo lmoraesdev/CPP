@@ -1,52 +1,51 @@
 #include "MateriaSource.hpp"
 
-MateriaSource::MateriaSource()
-{
-	for (int i = 0; i < 4; i++){
-		this->inv[i] = 0;
-	}
-	std::cout << "MateriaSource constructor called " << std::endl;
+// Constructors and destructor
+MateriaSource::MateriaSource(void) {
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = NULL;
+	std::cout << "Default MateriaSource constructed!" << std::endl;
+	return ;
+}
+MateriaSource::MateriaSource(const MateriaSource &source) {
+	*this = source;
+	std::cout << "MateriaSource copy constructed!" << std::endl;
+	return ;
+}
+MateriaSource::~MateriaSource(void) {
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete _inventory[i];
+	std::cout << "MateriaSource destructed!" << std::endl;
+	return ;
 }
 
-MateriaSource::MateriaSource(const MateriaSource &ref)
-{
-	*this = ref;
-	std::cout << "MateriaSource contructor by copy" << std::endl;
+// Operator overloads
+MateriaSource	&MateriaSource::operator=(const MateriaSource &other) {
+	if (this == &other)
+		return (*this);
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete _inventory[i];
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = other._inventory[i]->clone();
+	return (*this);
 }
 
-MateriaSource::~MateriaSource()
-{
-	for (int i = 0; i < 4; i++){
-		if (this->inv[i])
-			delete this->inv[i];
-	}
-	std::cout << "Destructor of MateriaSource " << " called" <<std::endl;
-}
-
-MateriaSource		&MateriaSource::operator=(MateriaSource const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-
-void MateriaSource::learnMateria(AMateria* m){
-	for (int i = 0; i < 4; i++){
-		if (this->inv[i] == 0){
-			this->inv[i] = m;
-			break ;
+// Member functions
+void MateriaSource::learnMateria(AMateria* materia) {
+	for (int i = 0; i < 4; i++) {
+		if (!_inventory[i]) {
+			_inventory[i] = materia;
+			return ;
 		}
 	}
+	return ;
 }
-
-AMateria* MateriaSource::createMateria(std::string const & type){
-	for (int i = 0; i < 4; i++){
-		if (this->inv[i] && this->inv[i]->getType() == type){
-			return (this->inv[i]->clone());
-		}
+AMateria* MateriaSource::createMateria(std::string const &type) {
+	for (int i = 0; i < 4; i++) {
+		if (_inventory[i] && _inventory[i]->getType() == type)
+			return (_inventory[i]->clone());
 	}
-	return (0);
+	return (NULL);
 }

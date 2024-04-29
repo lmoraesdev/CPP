@@ -1,21 +1,26 @@
-#if !defined(ROBOTOMYREQUESTFORM_HPP)
+#ifndef ROBOTOMYREQUESTFORM_HPP
 # define ROBOTOMYREQUESTFORM_HPP
 
-#include <iostream>
-#include "Form.hpp"
+# include "AForm.hpp"
+# include <cstdlib>
+# include <ctime>
 
-class RobotomyRequestForm : public Form
-{
-protected:
-	std::string target;
+class RobotomyRequestForm : public AForm {
+private:
+	std::string	_target;
 public:
-	RobotomyRequestForm(	std::string _target);
-	RobotomyRequestForm(const RobotomyRequestForm &ref);
-	RobotomyRequestForm	&operator=(RobotomyRequestForm const &ref);
-	~RobotomyRequestForm();
-	virtual	void execute(Bureaucrat const & executor) const;
-	std::string getTarget()const ;
-};
+	// Constructors and destructor
+	RobotomyRequestForm(void);
+	RobotomyRequestForm(std::string target);
+	RobotomyRequestForm(const RobotomyRequestForm &source);
+	virtual ~RobotomyRequestForm(void);
 
+	// Operator overloads
+	RobotomyRequestForm	&operator=(const RobotomyRequestForm &source);
+
+	// Member functions
+	std::string getTarget(void) const;
+	void		execute(Bureaucrat const &executor) const;
+};
 
 #endif

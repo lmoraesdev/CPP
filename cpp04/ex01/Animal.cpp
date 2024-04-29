@@ -1,32 +1,40 @@
 #include "Animal.hpp"
 
-Animal::Animal(std::string const &name)
-{
-	std::cout << "Animal constructor called for "<< name << std::endl;
+// Constructor and destructor
+Animal::Animal(void) : _type(""){
+	std::cout << "Default animal constructed!" << std::endl;
+	return ;
+}
+Animal::Animal(std::string animal_type) : _type(animal_type) {
+	std::cout << "Animal of type " << _type << " constructed!" << std::endl;
+	return ;
+}
+Animal::Animal(const Animal& other) {
+	*this = other;
+	std::cout << "Animal of type " << _type << " copy constructed!" << std::endl;
+	return ;
+}
+Animal::~Animal(void) {
+	std::cout << "Animal of type " << _type << " destructed!" << std::endl;
+	return ;
 }
 
-Animal::Animal(const Animal &ref)
-{
-	*this = ref;
-	std::cout << "Animal contructor by copy" << std::endl;
+// Operator overloads
+Animal	&Animal::operator=(const Animal& other) {
+	if (this == &other)
+		return (*this);
+	_type = other._type;
+	return (*this);
 }
 
-
-Animal::~Animal()
-{
-	std::cout << "Destructor of Animal " << " called" <<std::endl;
+// Member functions
+std::string	Animal::getType(void) const {
+	return (_type);
 }
-
-Animal		&Animal::operator=(Animal const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-
-void Animal::makeSound() const {
-	std::cout << "Default Sound" << std::endl;
+void	Animal::makeSound(void) const {
+	std::cout << "Animal ";
+	if (_type != "")
+		std::cout << _type << " ";
+	std::cout << "says: \"...\"" << std::endl;
+	return ;
 }

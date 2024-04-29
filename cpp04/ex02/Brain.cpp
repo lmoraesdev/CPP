@@ -1,26 +1,35 @@
 #include "Brain.hpp"
 
-Brain::Brain()
-{
-	std::cout << "Brain constructor called for "<< name << std::endl;
+// Constructors and destructor
+Brain::Brain(void) {
+	std::stringstream ss;
+	for (int i = 0; i < 100; i++) {
+		ss << i;
+		_ideas[i] = "Idea #" + ss.str();
+	}
+	std::cout << "Brain constructed!" << std::endl;
+	return ;
+}
+Brain::Brain(const Brain &source) {
+	*this = source;
+	std::cout << "Brain copy constructed!" << std::endl;
+	return ;
+}
+Brain::~Brain(void) {
+	std::cout << "Brain destructed!" << std::endl;
+	return ;
 }
 
-Brain::Brain(const Brain &ref)
-{
-	*this = ref;
-	std::cout << "Brain contructor by copy" << std::endl;
+// Operator overloads
+Brain	&Brain::operator=(const Brain &other) {
+	if (this == &other)
+		return (*this);
+	for (int i = 0; i < 100; i++)
+		_ideas[i] = other._ideas[i];
+	return (*this);
 }
 
-
-Brain::~Brain()
-{
-	std::cout << "Destructor of Brain " << " called" <<std::endl;
-}
-
-Brain		&Brain::operator=(Brain const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-		*this = ref;
-	return *this;
+// Member functions
+std::string	*Brain::getIdeas(void) {
+	return (_ideas);
 }

@@ -1,25 +1,34 @@
-#if !defined(DIAMONDTRAP_HPP)
+#ifndef DIAMONDTRAP_HPP
 # define DIAMONDTRAP_HPP
 
-# include <iostream>
-# include "ScavTrap.hpp"
-# include "FragTrap.hpp"
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
+// DiamondTrap class
 class DiamondTrap : public ScavTrap, public FragTrap
 {
-private:
-	std::string _name;
-	unsigned int _hit_damage;
-	unsigned int _energy;
-	unsigned int _attack;
-public:
-	DiamondTrap(std::string const &name = "Default_Diamond");
-	DiamondTrap(const DiamondTrap &ref);
-	DiamondTrap	&operator=(DiamondTrap const &ref);
-	~DiamondTrap();
-	void attack(const std::string& target);
-	void whoAmI()const ;
+	private:
+		std::string _name;
 
+	public:
+		// Default constructor
+		DiamondTrap(void);
+		// Class constructor
+		DiamondTrap(std::string name);
+		// Copy constructor
+		DiamondTrap(const DiamondTrap& other);
+		// Destructor
+		~DiamondTrap(void);
+		// Operator
+		DiamondTrap& operator=(const DiamondTrap& other);
+		// Getters
+		std::string	getName(void);
+		std::string	getClapName(void);
+		int			getHitPoints(void);
+		int			getEnergyPoints(void);
+		int			getAttackDamage(void);
+		// Member functions
+		void	whoAmI(void);
 };
 
-#endif // DIAMONDTRAP_HPP
+#endif

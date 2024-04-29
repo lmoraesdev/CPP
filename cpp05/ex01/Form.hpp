@@ -1,57 +1,50 @@
-#if !defined(FORM_HPP)
+#ifndef FORM_HPP
 # define FORM_HPP
 
-#include <iostream>
-#include <exception>
-#include "Bureaucrat.hpp"
+# include <iostream>
 
+// Macros
+# define RESET		"\e[m"
+# define RED		"\e[31m"
+# define GREEN		"\e[32m"
+# define YELLOW		"\e[33m"
 
 class Bureaucrat;
 
 class Form
 {
 private:
-	std::string const name;
-	bool	assigned;
-	const int grade_exec;
-	const int grade_sign;
-
-
+	static int const	_max_grade = 1;
+	static int const	_min_grade = 150;
+	std::string const	_name;
+	bool				_signed;
+	int const			_grade_to_sign;
+	int const			_grade_to_execute;
 public:
-	Form(std::string const &name, int _grade_exec, int _grade_sign);
-	Form(const Form &ref);
-	~Form();
-	// Structs
-	struct GradeTooHighException : public std::exception
-	{
-		const char *what() const throw(){
-			return ("Grade is too high");
-		}
+	// Constructors and destructor
+	Form(void);
+	Form(std::string name, int grade_to_sign, int grade_to_execute);
+	Form(const Form &source);
+	~Form(void);
+	// Assignment Operator overload
+	Form	&operator=(const Form &other);
+	// Getters
+	std::string	getName(void) const;
+	bool		getSigned(void) const;
+	int			getGradeToSign(void) const;
+	int			getGradeToExecute(void) const;
+	// Member functions
+	void		beSigned(Bureaucrat &bureaucrat);
+	// Exceptions
+	class GradeTooHighException : public std::exception {
+		virtual const char *what() const throw();
 	};
-
-	struct GradeTooLowException : public std::exception
-	{
-		const char *what() const throw(){
-			return ("Grade is too low");
-		}
+	class GradeTooLowException : public std::exception {
+		virtual const char *what() const throw();
 	};
-// Getters
-	std::string getName()const;
-	int getGradeSign()const;
-	int getGradeExec()const;
-	bool getSigned()const;
-
-// Operators
-	Form	operator=(Form const &ref);
-	// Form	operator++ (int value);
-	// Form	operator-- (int value);
-	// Form	&operator++ ();
-	// Form	&operator-- ();
-
-	void	beSigned(const Bureaucrat &b);
-
 };
 
-std::ostream	&operator<<(std::ostream &out, const Form &b);
+// Overload << operator for output
+std::ostream	&operator<<(std::ostream &os, const Form &form);
 
 #endif

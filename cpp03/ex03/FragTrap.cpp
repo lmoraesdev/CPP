@@ -1,32 +1,43 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap(std::string const &name): ClapTrap(name)
-{
-	this->_energy = 100;
-	this->_attack = 30;
-	this->_hit_damage = 100;
-	std::cout << "FragTrap constructor called for "<< name << std::endl;
+// Constructor and destructor
+FragTrap::FragTrap(void) : ClapTrap() {
+	_name = "Default";
+	_hitPoints = 100;
+	_attackDamage = 30;
+	std::cout << "Default FragTrap constructed!" << std::endl;
+	return ;
+}
+FragTrap::FragTrap(std::string name) : ClapTrap(name) {
+	_name = name;
+	_hitPoints = 100;
+	_attackDamage = 30;
+	std::cout << "FragTrap " << _name << " constructed!" << std::endl;
+	return ;
+}
+FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other) {
+	*this = other;
+	std::cout << "FragTrap " << _name << " copy constructed!" << std::endl;
+	return ;
+}
+FragTrap::~FragTrap(void) {
+	std::cout << "FragTrap " << _name << " destructed!" << std::endl;
+	return ;
 }
 
-FragTrap::FragTrap(const FragTrap &ref): ClapTrap()
-{
-	*this = ref;
-	std::cout << "FragTrap contructor by copy" << std::endl;
+// Operator overloads
+FragTrap	&FragTrap::operator=(const FragTrap& other) {
+	if (this == &other)
+		return (*this);
+	_name = other._name;
+	_hitPoints = other._hitPoints;
+	_energyPoints = other._energyPoints;
+	_attackDamage = other._attackDamage;
+	return (*this);
 }
 
-
-FragTrap::~FragTrap()
-{
-	std::cout << "Destructor of FragTrap " << this->_name << " called" <<std::endl;
-}
-
-FragTrap		&FragTrap::operator=(FragTrap const &ref)
-{
-	if (this != &ref)
-		ClapTrap::operator=(ref);
-	return *this;
-}
-
-void FragTrap::highFivesGuys(){
-	std::cout << "FragTrap "<< this->_name <<" : High Fives Guys !" << std::endl;
+// Member functions
+void	FragTrap::highFivesGuys(void) {
+	std::cout << "FragTrap " << _name << " says: \"High five, guys!\"" << std::endl;
+	return ;
 }

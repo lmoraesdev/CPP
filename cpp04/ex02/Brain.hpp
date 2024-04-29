@@ -1,19 +1,24 @@
-#if !defined(BRAIN_HPP)
-#define BRAIN_HPP
+#ifndef BRAIN_HPP
+# define BRAIN_HPP
 
-#include <iostream>
+# include <iostream>
+# include <sstream>
 
 class Brain
 {
 private:
-  std::string name;
-protected:
-	std::string ideas[100];
+	std::string _ideas[100];
 public:
-	Brain();
-	Brain(const Brain &ref);
-	Brain	&operator=(Brain const &ref);
-	~Brain();
+	// Constructors and destructor
+	Brain(void);
+	Brain(const Brain &source);
+	~Brain(void);
+
+	// Operator overloads
+	Brain	&operator=(const Brain &other);
+
+	// Member functions
+	std::string	*getIdeas(void);
 };
 
-#endif // BRAIN_HPP
+#endif

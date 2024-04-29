@@ -1,20 +1,31 @@
-#if !defined(ICE_HPP)
+#ifndef ICE_HPP
 # define ICE_HPP
 
-#include <iostream>
+# include <iostream>
 # include "AMateria.hpp"
-# include "ICharacter.hpp"
+
+/*
+Description: The Ice class is a concrete class that inherits from the AMateria
+class. It has a type, which is the name of the spell, and a use function that
+will be implemented by the concrete classes. The use function will receive a
+target as parameter, which will be the character that will be the target of the
+spell.
+*/
 
 class Ice : public AMateria
 {
-protected:
 public:
-	Ice();
-	Ice(const Ice &ref);
-	Ice	&operator=(Ice const &ref);
-	virtual ~Ice();
-	virtual Ice* clone() const;
-	virtual void use(ICharacter& target);
+	// Constructors and destructor
+	Ice(void);
+	Ice(const Ice &source);
+	virtual ~Ice(void);
+
+	// Operator overloads
+	Ice	&operator=(const Ice &other);
+
+	// Member functions
+	AMateria* clone(void) const;
+	void use(ICharacter& target);
 };
 
 #endif

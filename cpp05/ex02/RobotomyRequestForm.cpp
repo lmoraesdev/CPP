@@ -1,47 +1,42 @@
 #include "RobotomyRequestForm.hpp"
-#include <cstdlib>
-RobotomyRequestForm::RobotomyRequestForm(std::string _target)
-: Form("RobotomyRequestForm", 45 , 72) , target(_target)
-{
-	srand(time(NULL));
-	std::cout << "RobotomyRequestForm constructor called" << std::endl;
+#include "Bureaucrat.hpp"
+
+// Constructors and destructor
+RobotomyRequestForm::RobotomyRequestForm(void) : AForm("default", 1, 1), _target("default") {
+	return ;
+}
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45), _target(target) {
+	return ;
+}
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &source) : AForm(source), _target(source._target) {
+	*this = source;
+	return ;
+}
+RobotomyRequestForm::~RobotomyRequestForm(void) {
+	return ;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &ref)
-: Form("RobotomyRequestForm", 45 , 72) , target(ref.getTarget())
-{
-	*this = ref;
-	srand(time(NULL));
-	std::cout << "RobotomyRequestForm contructor by copy" << std::endl;
+// Operator overloads
+RobotomyRequestForm	&RobotomyRequestForm::operator=(const RobotomyRequestForm &source) {
+	if (this == &source)
+		return (*this);
+	_target = source._target;
+	return (*this);
 }
 
-
-RobotomyRequestForm::~RobotomyRequestForm()
-{
-	std::cout << "Destructor of RobotomyRequestForm " << " called" <<std::endl;
+// Member functions
+std::string RobotomyRequestForm::getTarget(void) const {
+	return (_target);
 }
-
-RobotomyRequestForm		&RobotomyRequestForm::operator=(RobotomyRequestForm const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-
-void RobotomyRequestForm::execute(Bureaucrat const & executor) const {
-	if (executor.getGrade() >= this->getGradeExec())
-		throw RobotomyRequestForm::Form::GradeTooLowException();
-
-	if (rand() % 2)
-		std::cout << this->getTarget() << " has been robotomized successfully" << std::endl;
+void		RobotomyRequestForm::execute(Bureaucrat const &executor) const {
+	if (!getSigned())
+		throw FormNotSignedException();
+	if (executor.getGrade() > getGradeToExecute())
+		throw GradeTooLowException();
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
+	std::cout << "* drilling noises *" << std::endl;
+	if (std::rand() % 2)
+		std::cout << _target << " has been robotomized successfully." << std::endl;
 	else
-		std::cout << "Robotomy failed" << std::endl;
-
-}
-
-std::string RobotomyRequestForm::getTarget()const {
-	return (this->target);
+		std::cout << _target << " robotomization failed." << std::endl;
 }

@@ -1,20 +1,43 @@
-#include  <iostream>
-#include  "Animal.hpp"
-#include  "Dog.hpp"
-#include  "Cat.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongCat.hpp"
 
-int main (void){
+// Color codes
+const std::string RESET = "\033[0m";
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
 
-	const Animal *animal = new Animal();
-	const Animal *dog = new Dog();
-	const Animal *cat = new Cat();
+int	main(void) {
+	std::cout << std::endl << YELLOW << "Creating Animal class:" << RESET << std::endl << std::endl;
+	const	Animal* meta = new Animal();
+	const	Animal* j = new Dog();
+	const	Animal* i = new Cat();
 
+	std::cout << std::endl << YELLOW << "Testing Animal class:" << RESET << std::endl << std::endl;
+	std::cout << "Animal of type " << j->getType() << " created" << std::endl;
+	std::cout << "Animal of type " << i->getType() << " created" << std::endl;
+	i->makeSound(); //will output the cat sound!
+	j->makeSound(); //will output the dog sound!
+	meta->makeSound();
 
-	animal->makeSound();
-	dog->makeSound();
-	cat->makeSound();
-	delete animal;
-	delete dog;
-	delete cat;
+	std::cout << std::endl << YELLOW << "Cleaning Animal objects:" << RESET << std::endl << std::endl;
+	delete meta;
+	delete j;
+	delete i;
+
+	std::cout << std::endl << YELLOW << "Creating WrongAnimal class:" << RESET << std::endl << std::endl;
+	const	WrongAnimal* gama = new WrongAnimal();
+	const	WrongAnimal* k = new WrongCat();
+
+	std::cout << std::endl << YELLOW << "Testing WrongAnimal class:" << RESET << std::endl << std::endl;
+	std::cout << "Animal of type " << k->getType() << " created" << std::endl;
+	k->makeSound(); //will output the wrong cat sound!
+	gama->makeSound();
+
+	std::cout << std::endl << YELLOW << "Cleaning WrongAnimal objects:" << RESET << std::endl << std::endl;
+
+	delete gama;
+	delete k;
 	return (0);
 }

@@ -1,70 +1,72 @@
 #include "Character.hpp"
 
-Character::Character(std::string name)
-{
-	std::cout << "Character constructor called" << std::endl;
-	this->name = name;
+// Constructors and destructor
+Character::Character(void) {
+	_name = "Default";
 	for (int i = 0; i < 4; i++)
-		this->inventory[i] = 0;
+		_inventory[i] = NULL;
+	std::cout << "Default Character constructed!" << std::endl;
+	return ;
 }
-
-Character::Character(const Character &ref)
-{
-	for (int i = 0; i < 4; i++){
-		if (this->inventory[i])
-			delete this->inventory[i];
-	}
-	this->name = ref.getName();
+Character::Character(std::string const &name) {
+	_name = name;
 	for (int i = 0; i < 4; i++)
-		this->inventory[i] = ref.inventory[i];
-	std::cout << "Character contructor by copy" << std::endl;
+		_inventory[i] = NULL;
+	std::cout << "Character " << _name << " constructed!" << std::endl;
+	return ;
+}
+Character::Character(const Character &source) {
+	// Deep copy
+	_name = source._name;
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = source._inventory[i]->clone();
+	std::cout << "Character " << _name << " copy constructed!" << std::endl;
+	return ;
+}
+Character::~Character(void) {
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete _inventory[i];
+	std::cout << "Character " << _name << " destructed!" << std::endl;
+	return ;
+
 }
 
-
-Character::~Character()
-{
-	for (int i = 0; i < 4; i++){
-		if (this->inventory[i])
-			delete this->inventory[i];
-	}
-	std::cout << "Destructor of Character " << " called" <<std::endl;
+// Operator overloads
+Character	&Character::operator=(const Character &other) {
+	if (this == &other)
+		return (*this);
+	_name = other._name;
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete _inventory[i];
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = other._inventory[i]->clone();
+	return (*this);
 }
 
-Character		&Character::operator=(Character const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		for (int i = 0; i < 4; i++){
-			if (this->inventory[i])
-				delete this->inventory[i];
+// Member functions
+std::string const	&Character::getName(void) const {
+	return (this->_name);
+}
+void Character::equip(AMateria* m) {
+	for (int i = 0; i < 4; i++) {
+		if (!_inventory[i]) {
+			_inventory[i] = m;
+			return ;
 		}
-		this->name = ref.getName();
-		for (int i = 0; i < 4; i++)
-			this->inventory[i] = ref.inventory[i];
 	}
-	return *this;
+	return ;
 }
-
-std::string const & Character::getName() const{
-	return (this->name);
+void Character::unequip(int idx) {
+	if (idx < 0 || idx > 3 || !_inventory[idx])
+		return ;
+	_inventory[idx] = NULL;
+	return ;
 }
-
-void Character::equip(AMateria* m){
-	for (int i = 0; i < 4; i++){
-		if (this->inventory[i] == 0){
-			this->inventory[i] = m;
-			break ;
-		}
-	}
-}
-
-void Character::unequip(int idx){
-	if (idx >= 0 && idx <= 3)
-		this->inventory[idx] = 0;
-}
-
-void Character::use(int idx, ICharacter& target){
-	if (idx >= 0 && idx <= 3)
-		this->inventory[idx]->use(target);
+void Character::use(int idx, ICharacter& target) {
+	if (idx < 0 || idx > 3 || !_inventory[idx])
+		return ;
+	_inventory[idx]->use(target);
+	return ;
 }

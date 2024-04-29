@@ -1,18 +1,47 @@
-#include  <iostream>
-#include  "Span.hpp"
+#include "Span.hpp"
 
-int main (void){
+int main(void) {
 
-	Span	array(5);
+    // Test #1
+    std::cout << YELLOW << "------ Test as in subject ------" RESET << std::endl;
+    Span sp = Span(5);
 
-	array.addNumber(8);
-	array.addNumber(1);
-	array.addNumber(3);
-	array.addNumber(10);
-	array.addNumber(5);
+    sp.addNumber(6);
+    sp.addNumber(3);
+    sp.addNumber(17);
+    sp.addNumber(9);
+    sp.addNumber(11);
+    std::cout << sp.shortestSpan() << std::endl;
+    std::cout << sp.longestSpan() << std::endl;
 
-	std::cout << array.longestSpan() << "\n";
-	std::cout << array.shortestSpan() << "\n";
+    // Test #2 - Exception
+    std::cout << YELLOW << "------ Test with exception ------" RESET << std::endl;
+    try {
+        sp.addNumber(1);
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 
-	return (0);
+    // Test #3 - with a minimum of 10000 elements
+    std::cout << YELLOW << "------ Test with a minimum of 10000 elements ------" RESET << std::endl;
+    Span sp3 = Span(10000);
+    // randomically fill the container
+    std::srand(time(NULL));
+    for (int i = 0; i < 10000; i++)
+        sp3.addNumber(std::rand() % 10000);
+    std::cout << sp3.shortestSpan() << std::endl;
+    std::cout << sp3.longestSpan() << std::endl;
+
+    // Test #4 - with a minimum of 100000 elements using addRange()
+    std::cout << YELLOW << "------ Test with a minimum of 100000 elements using addRange() ------" RESET << std::endl;
+    Span sp4 = Span(100000);
+    std::list<int> lst;
+    for (int i = 0; i < 100000; i++)
+        lst.push_back(std::rand() % 100000);
+    sp4.addRange(lst.begin(), lst.end());
+    std::cout << sp4.shortestSpan() << std::endl;
+    std::cout << sp4.longestSpan() << std::endl;
+
+    return (0);
 }

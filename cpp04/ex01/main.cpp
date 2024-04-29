@@ -1,23 +1,43 @@
-#include  <iostream>
-#include  "Dog.hpp"
-#include  "Cat.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-int main()
-{
-	Animal *pets[50];
+// Color codes
+const std::string RESET = "\033[0m";
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
 
-	for (int i = 0; i < 25; i++){
-		pets[i] = new Dog;
-		std::cout << "\033[1;32mDog number " << i + 1 << "\033[0;0m" << std::endl;
-	}
-	for (int i = 25; i < 50; i++){
-		pets[i] = new Cat;
-		std::cout << "\033[1;32mCat number " << i + 1 << "\033[0;0m" << std::endl;
-	}
+int	main(void) {
+	std::cout << std::endl << YELLOW << "-------- Create Dog --------" << RESET << std::endl << std::endl;
+	const Animal* j = new Dog();
 
-	for (int i = 0; i < 50; i++){
-		std::cout << "\033[1;32mAnimal number " << i + 1 << "\033[0;0m" << std::endl;
-		delete pets[i];
-	}
+	std::cout << std::endl << YELLOW << "-------- Create Cat --------" << RESET << std::endl << std::endl;
+	const Animal* i = new Cat();
 
+	std::cout << std::endl << YELLOW << "-------- Make Sounds --------" << RESET << std::endl << std::endl;
+	j->makeSound();
+	i->makeSound();
+
+	std::cout << std::endl << YELLOW << "-------- Create copies --------" << RESET << std::endl << std::endl;
+	Animal* copy_dog = new Dog(*((Dog*)j));
+	Animal* copy_cat = new Cat(*((Cat*)i));
+
+	std::cout << std::endl << YELLOW << "-------- Delete Copies --------" << RESET << std::endl << std::endl;
+	delete copy_dog;
+	delete copy_cat;
+
+	std::cout << std::endl << YELLOW << "-------- Assign Operator (Shallow) --------" << RESET << std::endl << std::endl;
+	// assignation operator
+	copy_dog = (Dog*)j;
+	copy_cat = (Cat*)i;
+	copy_dog->makeSound();
+	copy_cat->makeSound();
+
+	std::cout << std::endl << YELLOW << "-------- Delete Dog --------" << RESET << std::endl << std::endl;
+	delete j; //should not create a leak
+
+	std::cout << std::endl << YELLOW << "-------- Delete Cat --------" << RESET << std::endl << std::endl;
+	delete i; //should not create a leak
+
+	return (0);
 }

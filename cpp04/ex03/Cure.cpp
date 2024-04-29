@@ -1,35 +1,32 @@
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria("cure")
-{
-	std::cout << "Cure constructor called " << std::endl;
+// Constructors and destructor
+Cure::Cure(void) : AMateria("cure") {
+	std::cout << "Cure constructed!" << std::endl;
+	return ;
+}
+Cure::Cure(const Cure &source) : AMateria(source) {
+	std::cout << "Cure copy constructed!" << std::endl;
+	return ;
+}
+Cure::~Cure(void) {
+	std::cout << "Cure destructed!" << std::endl;
+	return ;
 }
 
-Cure::Cure(const Cure &ref) : AMateria("cure")
-{
-
-	std::cout << "Cure contructor by copy" << std::endl;
+// Operator overloads
+Cure	&Cure::operator=(const Cure &other) {
+	if (this == &other)
+		return (*this);
+	this->_type = other._type;
+	return (*this);
 }
 
-Cure::~Cure()
-{
-	std::cout << "Destructor of Cure " << " called" <<std::endl;
-}
-
-Cure		&Cure::operator=(Cure const &ref)
-{
-	std::cout << "Assignation with operator= called" <<std::endl;
-	if (this != &ref)
-	{
-		*this = ref;
-	}
-	return *this;
-}
-
-Cure* Cure::clone() const{
+// Member functions
+AMateria	*Cure::clone(void) const {
 	return (new Cure(*this));
 }
-
-void Cure::use(ICharacter& target){
-	std::cout << "heals "<< target.getName() <<"'s wounds" << std::endl;
+void Cure::use(ICharacter& target) {
+	std::cout << GREEN << "* heals " << target.getName() << "'s wounds *" << RESET << std::endl;
+	return ;
 }

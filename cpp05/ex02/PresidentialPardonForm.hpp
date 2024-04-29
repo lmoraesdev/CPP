@@ -1,20 +1,24 @@
-#if !defined(PRESIDENTIALPARDONFORM)
-# define PRESIDENTIALPARDONFORM
+#ifndef PRESIDENTIALPARDONFORM_HPP
+# define PRESIDENTIALPARDONFORM_HPP
 
-#include <iostream>
-#include "Form.hpp"
+# include "AForm.hpp"
 
-class PresidentialPardonForm : public Form
-{
-protected:
-	std::string target;
+class PresidentialPardonForm : public AForm {
+private:
+	std::string	_target;
 public:
+	// Constructors and destructor
+	PresidentialPardonForm(void);
 	PresidentialPardonForm(std::string target);
-	PresidentialPardonForm(const PresidentialPardonForm &ref);
-	PresidentialPardonForm	&operator=(PresidentialPardonForm const &ref);
-	~PresidentialPardonForm();
-	virtual	void execute(Bureaucrat const & executor) const;
-	std::string getTarget()const ;
+	PresidentialPardonForm(const PresidentialPardonForm &source);
+	virtual ~PresidentialPardonForm(void);
+
+	// Operator overloads
+	PresidentialPardonForm	&operator=(const PresidentialPardonForm &source);
+
+	// Member functions
+	std::string getTarget(void) const;
+	void		execute(Bureaucrat const &executor) const;
 };
 
 #endif

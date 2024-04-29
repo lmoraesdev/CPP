@@ -1,22 +1,24 @@
-#if !defined(DOG_HPP)
+#ifndef DOG_HPP
 # define DOG_HPP
 
-#include <iostream>
 #include "Animal.hpp"
-#include "Brain.hpp"
 
+// Dog Class
 class Dog : public Animal
 {
-protected:
-
 private:
-	Brain *brain;
+	Brain	*_brain;
 public:
-	Dog();
-	Dog(const Dog &ref);
-	Dog	&operator=(Dog const &ref);
-	~Dog();
-	void makeSound()const;
+	// Constructors and destructor
+	Dog(void);
+	Dog(const Dog& other);
+	virtual ~Dog(void);
+
+	// Operator overloads
+	Dog	&operator=(const Dog& other);
+
+	// Member functions
+	virtual void	makeSound(void) const;
 };
 
 #endif

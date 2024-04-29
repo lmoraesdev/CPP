@@ -1,19 +1,12 @@
-#include	"iter.hpp"
+#include "iter.hpp"
 
-void toUpper(char c)
-{
-	unsigned char	i;
+int main( void ) {
+    int a[] = {1, 2, 3, 4, 5};
+    std::string b[] = {"one", "two", "three", "four", "five"};
 
-	i = c;
-	if (i >= 'a' && i <= 'z')
-		i = i - 32;
-	std::cout << i << "\n";
-
-}
-
-int main (void){
-	std::string string("abc");
-
-	iter(const_cast<char *>(string.c_str()), string.length(), toUpper);
-
+    std::cout << YELLOW << "Printing integers in an array..." << RESET << std::endl;
+    ::iter(a, 5, print);
+    std::cout << YELLOW << "Printing strings in an array..." << RESET << std::endl;
+    ::iter(b, 5, print);
+    return (0);
 }
