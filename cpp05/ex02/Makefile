@@ -3,7 +3,9 @@ NAME		= AForm
 OBJ_PATH	=./obj/
 
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98 -Wshadow
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g -Wshadow -Wno-shadow
+
+VPATH	=	./
 
 RM			= rm -rf
 
@@ -30,6 +32,9 @@ $(NAME): 	$(OBJ)
 all:		$(NAME)
 
 re:			fclean all
+
+run:		all
+			./$(NAME)
 
 clean:
 			$(RM) $(OBJ) $(OBJ_PATH)

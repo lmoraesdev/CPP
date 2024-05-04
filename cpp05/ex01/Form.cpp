@@ -1,68 +1,96 @@
 #include "Form.hpp"
-#include "Bureaucrat.hpp"
 
-// Constructors and destructor
-Form::Form(void) : _name("default"), _grade_to_sign(150), _grade_to_execute(150) {
-	return ;
-}
-Form::Form(std::string name, int grade_to_sign, int grade_to_execute) : _name(name), _grade_to_sign(grade_to_sign), _grade_to_execute(grade_to_execute) {
-	if (grade_to_sign < _max_grade || grade_to_execute < _max_grade)
-		throw Form::GradeTooHighException();
-	else if (grade_to_sign > _min_grade || grade_to_execute > _min_grade)
-		throw Form::GradeTooLowException();
-	else
-		_signed = false;
-	return ;
-}
-Form::Form(const Form &source) : _name(source._name), _grade_to_sign(source._grade_to_sign), _grade_to_execute(source._grade_to_execute) {
-	*this = source;
-	return ;
-}
-Form::~Form(void) {
+Form::Form() : _name("form66"), _signed(false), _gradeSign(5), _gradeExecute(5)
+{
+	std::cout << "Form default constructor called" << std::endl;
 	return ;
 }
 
-// Operator overloads
-Form	&Form::operator=(const Form &other) {
-	if (this == &other)
-		return (*this);
-	_signed = other._signed;
+Form::Form(std::string name, int gradeSign, int gradeExecute) : _name(name), _signed(false), _gradeSign(_checkGrade(gradeSign)), _gradeExecute(_checkGrade(gradeExecute))
+{
+	std::cout << "Form " << name << ", parameter constructor called" << std::endl;
+	return ;
+}
+
+Form::Form(const Form& copy) : _name(copy.getName()), _signed(copy.getSigned()), _gradeSign(_checkGrade(copy.getGradeSign())), _gradeExecute(_checkGrade(copy.getGradeExecute()))
+{
+	std::cout << "Form " << copy.getName() << ", copy constructor called" << std::endl;
+	*this = copy;
+	return ;
+}
+
+Form::~Form()
+{
+	std::cout << "Form " << _name << ", destructor called" << std::endl;
+	return ;
+}
+
+Form &Form::operator=(Form const &copy)
+{
+	std::cout << "Form " << copy.getName() << ", copy assignment operator called" << std::endl;
+	if (this != &copy)
+	{
+		const_cast<std::string&>(this->_name) = copy.getName();
+		this->_signed = copy.getSigned();
+		const_cast<int&>(this->_gradeSign) = _checkGrade(copy.getGradeSign());
+		const_cast<int&>(this->_gradeExecute) = _checkGrade(copy.getGradeExecute());
+	}
 	return (*this);
 }
 
-// Getters
-std::string	Form::getName(void) const {
-	return (_name);
+void	Form::beSigned(Bureaucrat &vorgon)
+{
+	if (vorgon.getGrade() > (int)_gradeSign)
+		throw Form::GradeTooLowException();
+	if (_signed)
+		throw Form::AlreadySignedException();
+	_signed = true;
 }
-bool		Form::getSigned(void) const {
+
+bool	Form::getSigned(void) const
+{
 	return (_signed);
 }
-int			Form::getGradeToSign(void) const {
-	return (_grade_to_sign);
-}
-int			Form::getGradeToExecute(void) const {
-	return (_grade_to_execute);
+
+int	Form::getGradeSign(void) const
+{
+	return(_gradeSign);
 }
 
-// Member functions
-void		Form::beSigned(Bureaucrat &bureaucrat) {
-	if (bureaucrat.getGrade() > _grade_to_sign)
+int	Form::getGradeExecute(void) const
+{
+	return(_gradeExecute);
+}
+
+std::string Form::getName(void) const
+{
+	return (_name);
+}
+
+int	Form::_checkGrade(int const grade) {
+	if (grade < MAX_GRADE)
+		throw Form::GradeTooHighException();
+	if (grade > MIN_GRADE)
 		throw Form::GradeTooLowException();
-	else
-		_signed = true;
-	return ;
+	return grade;
 }
 
-// Exceptions
-const char *Form::GradeTooHighException::what() const throw() {
-	return (RED "Grade too high!" RESET);
-}
-const char *Form::GradeTooLowException::what() const throw() {
-	return (RED "Grade too low!" RESET);
+const char* Form::GradeTooHighException::what() const throw() {
+	return ("Grade Too High Exception");
 }
 
-// Stream operator overload
-std::ostream	&operator<<(std::ostream &out, const Form &form) {
-	out << GREEN << form.getName() << RESET << ", form grade to sign " << YELLOW << form.getGradeToSign() << RESET << ", form grade to execute " << YELLOW << form.getGradeToExecute() << RESET << ".";
-	return (out);
+const char* Form::GradeTooLowException::what() const throw() {
+	return ("Grade Too Low Exception");
+}
+
+const char* Form::AlreadySignedException::what() const throw() {
+	return ("Already Signed Exception");
+}
+
+std::ostream &operator<<(std::ostream &outputFile, Form const &form)
+{
+	outputFile	<< "Form: " << form.getName() << " is " << (form.getSigned() ? "signed" : "not signed")
+			<< ", grade needed to sign " << form.getGradeSign()
+			<< ", grade needed to execute " << form.getGradeExecute() << "." << std::endl;
+	return (outputFile);
 }

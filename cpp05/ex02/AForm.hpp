@@ -1,52 +1,55 @@
 #ifndef AFORM_HPP
 # define AFORM_HPP
 
-# include <iostream>
+# include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
-class AForm {
-private:
-	static int const	_maxGrade = 1;
-	static int const	_minGrade = 150;
-	std::string const	_name;
-	bool				_signed;
-	int const			_gradeToSign;
-	int const			_gradeToExecute;
-public:
-	// Constructors and destructor
-	AForm(void);
-	AForm(std::string name, int gradeToSign, int gradeToExecute);
-	AForm(const AForm &source);
-	virtual ~AForm(void);
+class AForm
+{
+	private:
+		std::string	_name;
+		bool		_signed;
+		int const	_gradeSign;
+		int const	_gradeExecute;
+		int			_checkGrade(int const grade);
+	public:
+		AForm();
+		AForm(std::string name, int gradeSign, int gradeExecute);
+		AForm(const AForm& copy);
+		virtual ~AForm();
+		AForm& operator=(AForm const& b);
 
-	// Operator overloads
-	AForm	&operator=(const AForm &other);
+		std::string		getName() const;
+		bool			getSigned() const;
+		int				getGradeSign() const;
+		int				getGradeExecute() const;
+		void			beSigned(Bureaucrat const& vorgon);
+		virtual void	execute(Bureaucrat const& executor) const = 0;
+		void			_checkExecute(Bureaucrat const& vorgon);
 
-	// Member functions
-	std::string getName(void) const;
-	bool		getSigned(void) const;
-	int			getGradeToSign(void) const;
-	int			getGradeToExecute(void) const;
-	void		beSigned(Bureaucrat &bureaucrat);
-	// Pure virtual functions
-	virtual void		execute(Bureaucrat const &executor) const = 0;
-	// Exception classes
-	class GradeTooHighException : public std::exception {
-		public:
-			virtual const char *what() const throw();
-	};
-	class GradeTooLowException : public std::exception {
-		public:
-			virtual const char *what() const throw();
-	};
-	class FormNotSignedException : public std::exception {
-		public:
-			virtual const char *what() const throw();
-	};
+		class GradeTooHighException : public std::exception {
+			public:
+				virtual const char* what(void) const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				virtual const char* what(void) const throw();
+		};
+		class AlreadySignedException: public std::exception {
+			public:
+				virtual const char	*what(void) const throw();
+		};
+		class FormNotSignException: public std::exception {
+			public:
+				virtual const char	*what(void) const throw();
+		};
+		class NoPermissionException: public std::exception {
+			public:
+				virtual const char	*what(void) const throw();
+		};
 };
 
-// Insertion operator overload
-std::ostream	&operator<<(std::ostream &os, const AForm &form);
+std::ostream &operator<<(std::ostream &output, AForm const &form);
 
 #endif

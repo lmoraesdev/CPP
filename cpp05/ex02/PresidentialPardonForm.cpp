@@ -1,37 +1,55 @@
 #include "PresidentialPardonForm.hpp"
-#include "Bureaucrat.hpp"
 
-// Constructors and destructor
-PresidentialPardonForm::PresidentialPardonForm(void) : AForm("default", 1, 1), _target("default") {
-	return ;
-}
-PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm", 25, 5), _target(target) {
-	return ;
-}
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &source) : AForm(source), _target(source._target) {
-	*this = source;
-	return ;
-}
-PresidentialPardonForm::~PresidentialPardonForm(void) {
+PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5) , _target("Undefined")
+{
+	std::cout << "Presidential Pardon Form default constructor called" << std::endl;
 	return ;
 }
 
-// Operator overloads
-PresidentialPardonForm	&PresidentialPardonForm::operator=(const PresidentialPardonForm &source) {
-	if (this == &source)
-		return (*this);
-	_target = source._target;
+PresidentialPardonForm::PresidentialPardonForm( std::string target ) : AForm("PresidentialPardonForm", 25, 5), _target(target)
+{
+	std::cout << "Presidential Pardon Form target parameter constructor called" << std::endl;
+	return ;
+}
+
+PresidentialPardonForm::PresidentialPardonForm( const PresidentialPardonForm & copy) : AForm("PresidentialPardonForm", 25, 5)
+{
+	*this = copy;
+	std::cout << "Presidential Pardon Form, copy constructor called" << std::endl;
+}
+
+PresidentialPardonForm::~PresidentialPardonForm()
+{
+	std::cout << "Presidential Pardon Form, destructor called" << std::endl;
+	return ;
+}
+
+PresidentialPardonForm	&PresidentialPardonForm::operator=( PresidentialPardonForm const &copy )
+{
+	std::cout << "Presidential Pardon Form, copy assignment operator called" << std::endl;
+	if (this != &copy)
+	{
+		this->_target = copy.getTarget();
+	}
 	return (*this);
 }
 
-// Member functions
-std::string PresidentialPardonForm::getTarget(void) const {
+std::string	PresidentialPardonForm::getTarget(void) const
+{
 	return (_target);
 }
-void		PresidentialPardonForm::execute(Bureaucrat const &executor) const {
-	if (!getSigned())
-		throw FormNotSignedException();
-	if (executor.getGrade() > getGradeToExecute())
-		throw GradeTooLowException();
-	std::cout << _target << " has been pardoned by Zafod Beeblebrox." << std::endl;
+
+void	PresidentialPardonForm::execute(Bureaucrat const& executor) const
+{
+	if (!this->getSigned())
+		throw AForm::FormNotSignException();
+	else if (this->getGradeExecute() < executor.getGrade())
+		throw AForm::GradeTooLowException();
+	else
+		std::cout << this->_target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+}
+
+const char* PresidentialPardonForm::CreateFileException::what() const throw()
+{
+	return ("Something went wrong with the pardon");
 }

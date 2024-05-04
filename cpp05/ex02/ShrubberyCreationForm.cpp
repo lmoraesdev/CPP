@@ -1,62 +1,93 @@
 #include "ShrubberyCreationForm.hpp"
-#include "Bureaucrat.hpp"
 
-// Constructors and destructor
-ShrubberyCreationForm::ShrubberyCreationForm(void) : AForm("default", 1, 1), _target("default") {
-	return ;
-}
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm", 145, 137), _target(target) {
-	return ;
-}
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &source) : AForm(source), _target(source._target) {
-	*this = source;
-	return ;
-}
-ShrubberyCreationForm::~ShrubberyCreationForm(void) {
+ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm", 145, 137) , _target("Undefined")
+{
+	std::cout << "Shrubbery Creation Form default constructor called" << std::endl;
 	return ;
 }
 
-// Operator overloads
-ShrubberyCreationForm	&ShrubberyCreationForm::operator=(const ShrubberyCreationForm &source) {
-	if (this == &source)
-		return (*this);
-	_target = source._target;
+ShrubberyCreationForm::ShrubberyCreationForm( std::string target ) : AForm("ShrubberyCreationForm", 145, 137), _target(target)
+{
+	std::cout << "Shrubbery Creation Form target parameter constructor called" << std::endl;
+	return ;
+}
+
+ShrubberyCreationForm::ShrubberyCreationForm( const ShrubberyCreationForm & copy) : AForm("ShrubberyCreationForm", 145, 137)
+{
+	*this = copy;
+	std::cout << "Shrubbery Creation Form, copy constructor called" << std::endl;
+}
+
+ShrubberyCreationForm::~ShrubberyCreationForm()
+{
+	std::cout << "Shrubbery Creation Form, destructor called" << std::endl;
+	return ;
+}
+
+ShrubberyCreationForm	&ShrubberyCreationForm::operator=( ShrubberyCreationForm const &copy )
+{
+	std::cout << "Shrubbery Creation Form, copy assignment operator called" << std::endl;
+	if (this != &copy)
+	{
+		this->_target = copy.getTarget();
+	}
 	return (*this);
 }
 
-// Member functions
-std::string ShrubberyCreationForm::getTarget(void) const {
+std::string	ShrubberyCreationForm::getTarget(void) const
+{
 	return (_target);
 }
-void		ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
+
+void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const
+{
 	if (!this->getSigned())
-		throw AForm::FormNotSignedException();
-	if (executor.getGrade() > this->getGradeToExecute())
+		throw AForm::FormNotSignException();
+	else if (this->getGradeExecute() < executor.getGrade())
 		throw AForm::GradeTooLowException();
-	std::ofstream file;
-	std::string filename = _target + "_shrubbery";
-	file.open(filename.c_str());
-	if (!file.is_open())
-		throw ShrubberyCreationForm::FileNotOpenException();
-	file << "      /\\      " << std::endl;
-	file << "     /\\*\\     " << std::endl;
-	file << "    /\\O\\*\\    " << std::endl;
-	file << "   /*/\\/\\/\\   " << std::endl;
-	file << "  /\\O\\/\\*\\/\\  " << std::endl;
-	file << " /\\*\\/\\*\\/\\/\\ " << std::endl;
-	file << "/\\O\\/\\/*/\\/O/\\" << std::endl;
-	file << "      ||      " << std::endl;
-	file << "      ||      " << std::endl;
-	file << "      ||      " << std::endl;
-	file << std::endl;
-	file << "      ||      " << std::endl;
-	file << "    \\****/    " << std::endl;
-	file << "     \\**/     " << std::endl;
-	file << "      \\/      " << std::endl;
-	file.close();
+	else
+	{
+		std::string		fileName;
+		std::ofstream	file;
+
+		fileName = this->getTarget() + "_shrubbery";
+		file.open(fileName.c_str());
+		if (!file.is_open())
+			return ;
+		file << "TREE IN ASCII\n"
+			<< "               _{\\ _{\\{\\/}/}/}__\n"
+			<< "              {/{/\\}{/{/\\}(\\}{/\\} _\n"
+			<< "             {/{/\\}{/{/\\}(_)\\}{/{/\\}  _\n"
+			<< "          {\\{/(\\}\\}{/{/\\}\\}{/){/\\}\\} /\\}\n"
+			<< "         {/{/(_)/}{\\{/)\\}{\\(_){/}/}/}/}\n"
+			<< "        _{\\{/{/{\\{/{/(_)/}/}/}{\\(/}/}/}\n"
+			<< "       {/{/{\\{\\{\\(/}{\\{\\/}/}{\\}(_){\\/}\\}\n"
+			<< "       _{\\{/{\\{/(_)\\}/}{/{/{/\\}\\})\\}{/\\}\n"
+			<< "      {/{/{\\{\\(/}{/{\\{\\{\\/})/}{\\(_)/}/}\\}\n"
+			<< "       {\\{\\/}(_){\\{\\{\\/}/}(_){\\/}{\\/}/})/}\n"
+			<< "        {/{\\{\\/}{/{\\{\\{\\/}/}{\\{\\/}/}\\}(_)\n"
+			<< "       {/{\\{\\/}{/){\\{\\{\\/}/}{\\{\\(/}/}\\}/}\n"
+			<< "        {/{\\{\\/}(_){\\{\\{\\(/}/}{\\(_)/}/}\\}\n"
+			<< "          {/({/{\\{/{\\{\\/}(_){\\/}/}\\}/}(\\}\n"
+			<< "           (_){/{\\/}{\\{\\/}/}{\\{\\)/}/}(_)\n"
+			<< "             {/{/{\\{\\/}{/{\\{\\{\\(_)/}\n"
+			<< "              {/{\\{\\{\\/}/}{\\{\\\\}/}\n"
+			<< "               {){/ {\\/}{\\/} \\}\\}\n"
+			<< "               (_)  \\.-'.-/\n"
+			<< "           __...--- |'-.-'| --...__\n"
+			<< "    _...--'   .-'   |'-.-'|  ' -.  --..__\n"
+			<< "  -.    ' .  . '    |.'-._| '  . .  '   \n"
+			<< "  .  '-  '    .--'  | '-.'|    .  '  . '\n"
+			<< "           ' ..     |'-_.-|\n"
+			<< "   .  '  .       _.-|-._ -|-._  .  '  .\n"
+			<< "               .'   |'- .-|   '.\n"
+			<< "   ..-'   ' .  '.   `-._.-'   .'  '  - .\n"
+			<< "    .-' '        '-._______.-'     '  .\n";
+		file.close();
+	}
 }
 
-// Exception classes
-const char *ShrubberyCreationForm::FileNotOpenException::what() const throw() {
-	return ("Error: could not open file.");
+const char* ShrubberyCreationForm::CreateFileException::what() const throw()
+{
+	return ("Something went wrong while creating the shrubbery");
 }

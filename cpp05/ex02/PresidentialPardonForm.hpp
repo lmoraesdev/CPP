@@ -3,22 +3,25 @@
 
 # include "AForm.hpp"
 
-class PresidentialPardonForm : public AForm {
-private:
-	std::string	_target;
-public:
-	// Constructors and destructor
-	PresidentialPardonForm(void);
-	PresidentialPardonForm(std::string target);
-	PresidentialPardonForm(const PresidentialPardonForm &source);
-	virtual ~PresidentialPardonForm(void);
+class PresidentialPardonForm : public AForm
+{
+	private:
+		std::string	_target;
+	public:
+		PresidentialPardonForm();
+		PresidentialPardonForm(std::string target );
+		PresidentialPardonForm(PresidentialPardonForm const & copy);
+		~PresidentialPardonForm();
 
-	// Operator overloads
-	PresidentialPardonForm	&operator=(const PresidentialPardonForm &source);
+		PresidentialPardonForm	&operator=(PresidentialPardonForm const& copy);
 
-	// Member functions
-	std::string getTarget(void) const;
-	void		execute(Bureaucrat const &executor) const;
+		void		execute(Bureaucrat const &executor) const;
+		std::string	getTarget() const;
+
+		class CreateFileException: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
 };
 
 #endif

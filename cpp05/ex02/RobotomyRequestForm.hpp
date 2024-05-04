@@ -2,25 +2,26 @@
 # define ROBOTOMYREQUESTFORM_HPP
 
 # include "AForm.hpp"
-# include <cstdlib>
-# include <ctime>
 
-class RobotomyRequestForm : public AForm {
-private:
-	std::string	_target;
-public:
-	// Constructors and destructor
-	RobotomyRequestForm(void);
-	RobotomyRequestForm(std::string target);
-	RobotomyRequestForm(const RobotomyRequestForm &source);
-	virtual ~RobotomyRequestForm(void);
+class RobotomyRequestForm : public AForm
+{
+	private:
+		std::string	_target;
+	public:
+		RobotomyRequestForm();
+		RobotomyRequestForm(std::string target );
+		RobotomyRequestForm(RobotomyRequestForm const & copy);
+		~RobotomyRequestForm();
 
-	// Operator overloads
-	RobotomyRequestForm	&operator=(const RobotomyRequestForm &source);
+		RobotomyRequestForm	&operator=(RobotomyRequestForm const& copy);
 
-	// Member functions
-	std::string getTarget(void) const;
-	void		execute(Bureaucrat const &executor) const;
+		void		execute(Bureaucrat const &executor) const;
+		std::string	getTarget() const;
+
+		class CreateFileException: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
 };
 
 #endif
