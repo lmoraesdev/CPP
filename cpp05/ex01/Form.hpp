@@ -1,50 +1,45 @@
 #ifndef FORM_HPP
 # define FORM_HPP
 
-# include <iostream>
-
-// Macros
-# define RESET		"\e[m"
-# define RED		"\e[31m"
-# define GREEN		"\e[32m"
-# define YELLOW		"\e[33m"
+# include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
 class Form
 {
-private:
-	static int const	_max_grade = 1;
-	static int const	_min_grade = 150;
-	std::string const	_name;
-	bool				_signed;
-	int const			_grade_to_sign;
-	int const			_grade_to_execute;
-public:
-	// Constructors and destructor
-	Form(void);
-	Form(std::string name, int grade_to_sign, int grade_to_execute);
-	Form(const Form &source);
-	~Form(void);
-	// Assignment Operator overload
-	Form	&operator=(const Form &other);
-	// Getters
-	std::string	getName(void) const;
-	bool		getSigned(void) const;
-	int			getGradeToSign(void) const;
-	int			getGradeToExecute(void) const;
-	// Member functions
-	void		beSigned(Bureaucrat &bureaucrat);
-	// Exceptions
-	class GradeTooHighException : public std::exception {
-		virtual const char *what() const throw();
-	};
-	class GradeTooLowException : public std::exception {
-		virtual const char *what() const throw();
-	};
+	private:
+		std::string const	_name;
+		bool			_signed;
+		int const		_gradeSign;
+		int const		_gradeExecute;
+		int				_checkGrade(int const grade);
+	public:
+		Form();
+		Form(std::string name, int gradeSign, int gradeExecute);
+		Form(const Form& copy);
+		~Form();
+		Form& operator=(Form const& b);
+
+		std::string	getName() const;
+		bool		getSigned() const;
+		int			getGradeSign() const;
+		int			getGradeExecute() const;
+		void		beSigned(Bureaucrat &vorgon);
+
+		class GradeTooHighException : public std::exception {
+			public:
+				virtual const char* what(void) const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				virtual const char* what(void) const throw();
+		};
+		class AlreadySignedException: public std::exception {
+			public:
+				virtual const char	*what(void) const throw();
+		};
 };
 
-// Overload << operator for output
-std::ostream	&operator<<(std::ostream &os, const Form &form);
+std::ostream &operator<<(std::ostream &output, Form const &form);
 
 #endif

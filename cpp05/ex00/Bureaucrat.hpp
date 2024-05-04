@@ -1,54 +1,40 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-// Libraries
 # include <iostream>
-# include <string>
-# include <exception>
 
-// Macros
-# define RESET		"\e[m"
-# define RED		"\e[31m"
-# define GREEN		"\e[32m"
-# define YELLOW		"\e[33m"
+# define MAX_GRADE 1
+# define MIN_GRADE 150
 
-// Class
 class Bureaucrat
 {
-private:
-	static int const	_max_grade = 1;
-	static int const	_min_grade = 150;
-	std::string const	_name;
-	int					_grade;
-public:
-	// Default constructor
-	Bureaucrat(void);
-	// Parameter constructor
-	Bureaucrat(std::string name, int grade);
-	// Copy constructor
-	Bureaucrat(const Bureaucrat &source);
-	// Destructor
-	~Bureaucrat(void);
-	// Assignment Operator overload
-	Bureaucrat	&operator=(const Bureaucrat &source);
-	// Getters
-	std::string	getName(void) const;
-	int			getGrade(void) const;
-	// Member functions
-	void		incrementGrade(void);
-	void		decrementGrade(void);
-	// Exception classes
-	class GradeTooHighException : public std::exception {
-		public:
-			virtual const char *what() const throw();
-	};
-	class GradeTooLowException : public std::exception {
-		public:
-			virtual const char *what() const throw();
-	};
+	private:
+		std::string const	_name;
+		int					_grade;
+	public:
+		Bureaucrat();
+		Bureaucrat(const Bureaucrat& copy);
+		Bureaucrat(std::string const name, int const grade);
+		~Bureaucrat();
+		Bureaucrat& operator=(Bureaucrat const& b);
+
+		std::string	getName() const;
+		int			getGrade() const;
+		void		setGrade(int const grade);
+		void		incrementGrade();
+		void		decrementGrade();
+
+		class GradeTooHighException : public std::exception
+		{
+			virtual const char* what(void) const throw();
+		};
+
+		class GradeTooLowException : public std::exception
+		{
+			virtual const char* what(void) const throw();
+		};
 };
 
-// Overload << operator for output
-std::ostream	&operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
+std::ostream &operator<<(std::ostream &output, Bureaucrat const &bureaucrat);
 
 #endif

@@ -3,7 +3,7 @@ NAME		= Bureaucrat
 OBJ_PATH	=./obj/
 
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98 -Wshadow
+CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g -Wshadow -Wno-shadowcd
 
 RM			= rm -rf
 

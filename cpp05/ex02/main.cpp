@@ -1,132 +1,84 @@
+#include "Bureaucrat.hpp"
+#include "AForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "Bureaucrat.hpp"
 
-static void	test_schrubbery(void);
-static void	test_robotomy(void);
-static void	test_presidential(void);
 
-int main(void) {
-	test_schrubbery();
-	test_robotomy();
-	test_presidential();
+int	main(void)
+{
+	std::cout << "\n------- Presidential Pardon Form -------" << std::endl;
+	Bureaucrat zorgon2("Prostetnic Vogon Kwaltz", 26);
+	PresidentialPardonForm formulary("Phineas");
+	try {
+		formulary.beSigned(zorgon2);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		zorgon2.executeForm(formulary);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	zorgon2.setGrade(4);
+	formulary.beSigned(zorgon2);
+	try {
+		formulary.beSigned(zorgon2);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		zorgon2.executeForm(formulary);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << "\n\n-------- Shrubbery Request Form --------" << std::endl;
+	Bureaucrat zorgon3("Prostetnic Vogon Jeltz", 150);
+
+	ShrubberyCreationForm formulary1("Knights who say NI");
+	try {
+		formulary1.beSigned(zorgon3);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		zorgon3.executeForm(formulary1);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	zorgon3.setGrade(5);
+	try {
+		formulary1.beSigned(zorgon3);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	try {
+		zorgon3.executeForm(formulary1);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << "\n\n--------- Robotomy Request Form --------" << std::endl;
+	Bureaucrat zorgon4("Zarniwoop", 46);
+
+	RobotomyRequestForm formulary2("Roboto");
+	try {
+		formulary2.execute(zorgon4);
+	}
+	catch (const std::exception& e)	{
+		std::cerr << e.what() << std::endl;
+	}
+	formulary2.beSigned(zorgon4);
+	zorgon4.incrementGrade();
+	zorgon4.executeForm(formulary2);
+	zorgon4.executeForm(formulary2);
+	std::cout << "\n\n---------- Default Destructors ---------" << std::endl;
 	return (0);
-}
-
-static void	test_schrubbery(void) {
-	std::cout << std::endl << YELLOW << "------ ShrubberyCreationForm : #1 ------" << RESET << std::endl;
-	try {
-		ShrubberyCreationForm form("Alice");
-		Bureaucrat bureaucrat("John", 1);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ ShrubberyCreationForm : #2 ------" << RESET << std::endl;
-		try {
-		ShrubberyCreationForm form("Betty");
-		Bureaucrat bureaucrat("Nick", 140);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ ShrubberyCreationForm : #3 ------" << RESET << std::endl;
-	try {
-		ShrubberyCreationForm form("Carla");
-		Bureaucrat bureaucrat("Evan", 150);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-}
-
-static void	test_robotomy(void) {
-	std::cout << std::endl << YELLOW << "------ RobotomyCreationForm : #1 ------" << RESET << std::endl;
-	try {
-		RobotomyRequestForm form("Alice");
-		Bureaucrat bureaucrat("John", 1);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ RobotomyCreationForm : #2 ------" << RESET << std::endl;
-		try {
-		RobotomyRequestForm form("Betty");
-		Bureaucrat bureaucrat("Nick", 60);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ RobotomyCreationForm : #3 ------" << RESET << std::endl;
-	try {
-		RobotomyRequestForm form("Carla");
-		Bureaucrat bureaucrat("Evan", 150);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-}
-
-static void	test_presidential(void) {
-	std::cout << std::endl << YELLOW << "------ PresidentialPardonForm : #1 ------" << RESET << std::endl;
-	try {
-		PresidentialPardonForm form("Alice");
-		Bureaucrat bureaucrat("John", 1);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ PresidentialPardonForm : #2 ------" << RESET << std::endl;
-		try {
-		PresidentialPardonForm form("Betty");
-		Bureaucrat bureaucrat("Nick", 15);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << std::endl << YELLOW << "------ PresidentialPardonForm : #3 ------" << RESET << std::endl;
-	try {
-		PresidentialPardonForm form("Carla");
-		Bureaucrat bureaucrat("Evan", 150);
-		std::cout << form << std::endl;
-		std::cout << bureaucrat << std::endl;
-		bureaucrat.signForm(form);
-		bureaucrat.executeForm(form);
-	}
-	catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
-	}
 }

@@ -1,4 +1,4 @@
-NAME		= AForm
+NAME	=	ratherHaveCoffee
 
 OBJ_PATH	=./obj/
 
@@ -14,7 +14,8 @@ SRC 		= main.cpp \
 			AForm.cpp \
 			ShrubberyCreationForm.cpp \
 			RobotomyRequestForm.cpp \
-			PresidentialPardonForm.cpp
+			PresidentialPardonForm.cpp \
+			Intern.cpp
 
 OBJ 		= $(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
